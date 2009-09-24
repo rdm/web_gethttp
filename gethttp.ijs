@@ -1,7 +1,7 @@
 NB. =========================================================
 NB. J interface for Wget/cURL to retrieve files using http, ftp, https
 
-require '~system\packages\misc\task.ijs'
+require 'task'
 
 coclass 'wgethttp'
 
@@ -15,6 +15,13 @@ HTTPCMD=: IFCURL{:: HTTPCMD;'curl'
   end.
   ''
 )
+
+NB. Utility verbs
+safe=. (33}.127{.a.)-.'=&%+'
+encode=:  [: toupper ('%',(I.'6'=,3!:3'f') {&, 3!:3)
+
+NB.*urlencode v Encode string as valid url
+urlencode=:  [: ; encode^:(safe -.@e.~ ])&.>
 
 NB.*gethttp v Retrieve URI using Wget/cURL tools
 NB. [option] gethttp uri
@@ -56,3 +63,4 @@ NB. =========================================================
 NB. Export z locale
 
 gethttp_z_ =: gethttp_wgethttp_
+urlencode_z_=: urlencode_wgethttp_
