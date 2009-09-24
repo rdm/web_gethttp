@@ -18,5 +18,5 @@ FILES=: 0 : 0
 history.txt
 manifest.ijs
 gethttp.ijs
-test_gethttp.ijs
+test/test_gethttp.ijs
 )

@@ -1,4 +1,4 @@
-NB. project file: c:/users/rsherloc/documents/j602-user/jsrc/addons/web/gethttp/gethttp
+NB. project file: ~Addons/web/gethttp/gethttp
 
 coclass 'jproject'
 
@@ -13,7 +13,7 @@ DEVLIBS=: ''
 OTHERFILES=: 0 : 0
 ~Addons/web/gethttp/history.txt
 ~Addons/web/gethttp/manifest.ijs
-~Addons/web/gethttp/test_gethttp.ijs
+~Addons/web/gethttp/test/test_gethttp.ijs
 )
 
 TARGETFILE=: ''
@@ -30,7 +30,7 @@ PREBUILDFILE=: ''
 
 POSTBUILDFILE=: ''
 
-TESTFILE=: '~Addons/web/gethttp/test_src.ijs'
+TESTFILE=: '~Addons/web/gethttp/test/test_src.ijs'
 
 NOTES=: ''
 

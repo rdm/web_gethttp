@@ -16,9 +16,13 @@ HTTPCMD=: IFCURL{:: HTTPCMD;'curl'
   ''
 )
 
+NB. ---------------------------------------------------------
 NB. Utility verbs
 safe=. (33}.127{.a.)-.'=&%+'
 encode=:  [: toupper ('%',(I.'6'=,3!:3'f') {&, 3!:3)
+
+NB. ---------------------------------------------------------
+NB. Public verbs
 
 NB.*urlencode v Encode string as valid url
 urlencode=:  [: ; encode^:(safe -.@e.~ ])&.>
