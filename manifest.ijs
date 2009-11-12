@@ -8,7 +8,7 @@ Retrieve file contents or save to file.
 
 )
 
-NB.VERSION=: '1.0.0'
+VERSION=: '1.0.0'
 
 RELEASE=: 'j602'
 
