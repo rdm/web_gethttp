@@ -1,7 +1,8 @@
 NB. =========================================================
+NB. web/gethttp
 NB. J interface for Wget/cURL to retrieve files using http, ftp, https
 
-require 'task'
+require 'task strings'
 
 coclass 'wgethttp'
 
@@ -20,12 +21,31 @@ NB. ---------------------------------------------------------
 NB. Utility verbs
 safe=. (33}.127{.a.)-.'=&%+'
 encode=:  [: toupper ('%',(I.'6'=,3!:3'f') {&, 3!:3)
+nvp=: >@{.,'=',urlencode@":@>@{:
+args=: [: }.@; ('&'<@,nvp)"1
 
 NB. ---------------------------------------------------------
 NB. Public verbs
 
 NB.*urlencode v Encode string as valid url
 urlencode=:  [: ; encode^:(safe -.@e.~ ])&.>
+
+NB.*urlquery v Creates urlencoded string of namevalue pairs.
+NB. returns: urlencoded string of namevalue pairs for appending to url
+NB. y is: rank 1 or 2 array of boxed namevalue pairs
+NB.        rank 1 assumes name;value;name;value...
+NB.        rank 2 assumes 0{"1 is names & 1{"1 is values
+NB. eg: urlquery ('action';'query'),('name';'S&P Inc'),:('format';'json')
+urlquery=: 3 : 0
+  if. 0 e. $y do. '' return. end.
+  'arg should be boxed' assert 32 = 3!:0 y
+  'arg should be rank 1 or 2' assert 1 2 e.~ rnk=. #$y
+  if. rnk = 1 do. 
+    'arg should be name-value pairs' assert 0 = 2|#y
+    y=. _2]\ y
+  else. 'arg should only have 2 cols' assert 2 = {:$y end.
+  args y
+)
 
 NB.*gethttp v Retrieve URI using Wget/cURL tools
 NB. [option] gethttp uri
@@ -68,3 +88,4 @@ NB. Export z locale
 
 gethttp_z_ =: gethttp_wgethttp_
 urlencode_z_=: urlencode_wgethttp_
+urlquery_z_=: urlquery_wgethttp_
