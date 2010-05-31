@@ -1,5 +1,8 @@
 web/gethttp - change history
 
+== 1.0.1 ==
+ * add: Support for query strings
+ * release for J7.01
 
 == 1.0.0 ==
  * publish in JAL
