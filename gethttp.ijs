@@ -6,9 +6,9 @@ require 'task strings'
 
 coclass 'wgethttp'
 
-IFCURL=: IFUNIX *. UNAME-:'Darwin'
-HTTPCMD=: (jpath '~tools/ftp/')&,^:(-.IFUNIX) 'wget'
-HTTPCMD=: IFCURL{:: HTTPCMD;'curl'
+IFWGET=: IFUNIX *. -.UNAME-:'Darwin'          NB. Linux only
+HTTPCMD=: (jpath '~addons/web/gethttp/bin/')&,^:(-.IFUNIX) 'curl'
+HTTPCMD=: IFWGET{:: HTTPCMD;'wget'
 
 3 : 0 ''
   if. IFUNIX do.   NB. fix task.ijs definition of spawn on mac/unix
@@ -65,13 +65,13 @@ gethttp=: 3 : 0
   'jopts fnme'=. 2{. boxopen x
   select. jopts
   case. 'stdout' do.  NB. content retrieved from stdout, log suppressed
-    opts=. IFCURL{:: '-O - -q';'-o - -s -S'
+    opts=. IFWGET{:: '-o - -s -S';'-O - -q'
   case. 'file' do. 
     if. #fnme do.     NB. save as filename
-      opts=. IFCURL{:: '-O ';'-o '
+      opts=. IFWGET{:: '-o ';'-O '
       opts=. opts,fnme
     else.             NB. copy file to current dir
-      opts=. IFCURL{:: ' ';'-O'
+      opts=. IFWGET{:: '-O';' '
     end.
   case. 'help' do.    NB. help
     opts=. '--help'

@@ -20,3 +20,7 @@ manifest.ijs
 gethttp.ijs
 test/test_gethttp.ijs
 )
+
+FILESWIN=: 0 : 0
+bin/curl.exe
+)

@@ -57,7 +57,7 @@ test=: 3 : 0
     assert checkFile TestCntFile
 
     NB. content saved to file, log saved to file
-    if. IFUNIX *. UNAME -: 'Darwin' do.  NB. cURL options
+    if. IFUNIX = UNAME -: 'Darwin' do.  NB. cURL options
       opts=. '-o ',TestCntFile,' --stderr ',TestLogFile
     else.                                NB. Wget options
       opts=. '-O ',TestCntFile,' -o ',TestLogFile
@@ -86,7 +86,7 @@ Note 'test commands for gethttp'
   ('file';TestCntFile) gethttp 'http://www.jsoftware.com'
 )
 
-Note 'Example raw options for Wget (Windows/Linux)'
+Note 'Example raw options for Wget (Linux)'
   NB. The following use raw Wget options.
   NB. content retrieved from stdout, log suppressed
   ]cnt=. '-O - -q' gethttp 'http://www.jsoftware.com'
@@ -108,7 +108,7 @@ Note 'Example raw options for Wget (Windows/Linux)'
   ('-O ',(jpath '~temp/jindex.htm'),' -o ',jpath '~temp/gethttp.log') gethttp 'http://www.jsoftware.com'
 )
 
-Note 'Example raw options for cURL (Mac)'
+Note 'Example raw options for cURL (Win/Mac)'
   NB. The following use raw cURL options. (untested)
   NB. content retrieved from stdout, log suppressed
   ]cnt=. '-o - -s -S' gethttp 'http://www.jsoftware.com'

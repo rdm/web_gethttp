@@ -1,5 +1,9 @@
 web/gethttp - change history
 
+== 1.0.2 ==
+ * chg: On Windows use cURL instead of Wget
+ * add: Ship curl.exe for Windows
+
 == 1.0.1 ==
  * add: Support for query strings
  * release for J7.01
