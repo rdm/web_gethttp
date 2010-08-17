@@ -68,10 +68,10 @@ gethttp=: 3 : 0
     opts=. IFWGET{:: '-o - -s -S';'-O - -q'
   case. 'file' do. 
     if. #fnme do.     NB. save as filename
-      opts=. IFWGET{:: '-o ';'-O '
+      opts=. IFWGET{:: '--stderr - -o ';'-O '
       opts=. opts,fnme
     else.             NB. copy file to current dir
-      opts=. IFWGET{:: '-O';' '
+      opts=. IFWGET{:: '-O --stderr -';' '
     end.
   case. 'help' do.    NB. help
     opts=. '--help'
