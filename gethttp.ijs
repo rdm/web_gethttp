@@ -13,6 +13,8 @@ HTTPCMD=: IFWGET{:: HTTPCMD;'wget'
 3 : 0 ''
   if. IFUNIX do.   NB. fix task.ijs definition of spawn on mac/unix
     spawn=: [: 2!:0 '(' , ' || true)' ,~ ]
+  else.
+    spawn=: spawn_jtask_
   end.
   ''
 )
