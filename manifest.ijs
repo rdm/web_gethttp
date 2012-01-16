@@ -8,7 +8,7 @@ Retrieve file contents or save to file.
 
 )
 
-VERSION=: '1.0.1'
+VERSION=: '1.0.2'
 
 RELEASE=: 'j602 j701'
 
