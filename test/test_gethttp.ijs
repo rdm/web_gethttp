@@ -9,7 +9,8 @@ Note 'To test'
 require 'files'
 
 NB. Test nouns
-  TestURL=: 'http://www.google.com/privacy_faq.html'
+  TestURL=: 'www.google.com/policies/privacy/archive/20111020/'
+  TestURL=: 'donate.wikimedia.org/w/index.php?title=Special:FundraiserLandingPage'
   TestCntFile=: jpath '~temp/gethttp_cnt.html'
   TestDefFile=: jpath '~temp/privacy_faq.html'
   TestLogFile=: jpath '~temp/gethttp_log.html'
@@ -37,7 +38,7 @@ test=: 3 : 0
     1!:44 jpath '~temp/'
     URLcnt=: gethttp TestURL
     assert 2000 < #URLcnt
-    assert +./ 'Google' E. URLcnt
+    assert +./ 'Wiki' E. URLcnt
     
     assert URLcnt -: 'stdout' gethttp TestURL
 
