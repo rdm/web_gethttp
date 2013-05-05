@@ -6,11 +6,17 @@ require 'task strings'
 
 coclass 'wgethttp'
 
-IFWGET=: IFUNIX *. -.UNAME-:'Darwin'          NB. Linux only
-HTTPCMD=: (jpath '~addons/web/gethttp/bin/')&,^:(-.IFUNIX) 'curl'
-HTTPCMD=: IFWGET{:: HTTPCMD;'wget'
-
 3 : 0 ''
+
+  IFWGET=: IFUNIX *. -.UNAME-:'Darwin'          NB. Linux only
+  HTTPCMD=: 'curl'
+  if. -.IFUNIX do.
+    if. fexist f=. jpath '~addons/web/gethttp/bin/curl.exe'
+      HTTPCMD=: f
+    end.
+  end.
+  HTTPCMD=: IFWGET{:: HTTPCMD;'wget'
+
   if. IFUNIX do.   NB. fix task.ijs definition of spawn on mac/unix
     spawn=: [: 2!:0 '(' , ' || true)' ,~ ]
   else.
