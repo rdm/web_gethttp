@@ -11,7 +11,7 @@ coclass 'wgethttp'
   IFWGET=: IFUNIX *. -.UNAME-:'Darwin'          NB. Linux only
   HTTPCMD=: 'curl'
   if. -.IFUNIX do.
-    if. fexist f=. jpath '~addons/web/gethttp/bin/curl.exe'
+    if. fexist f=. jpath '~addons/web/gethttp/bin/curl.exe' do.
       HTTPCMD=: f
     end.
   end.
