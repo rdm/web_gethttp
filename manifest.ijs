@@ -7,9 +7,9 @@ J interface to Wget/cURL for retrieving files using http, https or ftp protocols
 Retrieve file contents or save to file.
 )
 
-VERSION=: '1.0.6'
+VERSION=: '1.0.7'
 
-RELEASE=: 'j602 j701 j801'
+RELEASE=: 'j602 j701 j801 j802'
 
 PLATFORMS=: ''
 
