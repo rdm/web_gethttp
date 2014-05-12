@@ -7,11 +7,11 @@ J interface to Wget/cURL for retrieving files using http, https or ftp protocols
 Retrieve file contents or save to file.
 )
 
-VERSION=: '1.0.7'
+VERSION=: '1.0.8'
 
 RELEASE=: 'j602 j701 j801 j802'
 
-PLATFORMS=: 'linux win darwin android'
+PLATFORMS=: ''
 
 FILES=: 0 : 0
 history.txt
