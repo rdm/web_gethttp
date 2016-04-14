@@ -16,6 +16,10 @@ coclass 'wgethttp'
     end.
   end.
   HTTPCMD=: IFWGET{:: HTTPCMD;'wget'
+  if. 1=ftype '/system/xbin/wget' do.  NB. android busybox
+    IFWGET=: 1
+    HTTPCMD=: '/system/xbin/wget'
+  end.
 
   if. IFUNIX do.   NB. fix task.ijs definition of spawn on mac/unix
     spawn=: [: 2!:0 '(' , ' || true)' ,~ ]
@@ -71,7 +75,7 @@ gethttp=: 3 : 0
 :
   url=. y
   'jopts fnme'=. 2{. boxopen x
-  if. IFIOS+.UNAME-:'Android' do.
+  if. (-.IFWGET) *. IFIOS+.UNAME-:'Android' do.
   if. 'http://'-.@-:7{.url do.
     'only http:// supported' return.
   end.
@@ -98,6 +102,7 @@ gethttp=: 3 : 0
     data return.
   else.
     if. #fil do.
+      if. '/' e. fil=. jpathsep fil do. mkdir_j_ ({.~ i:&'/') fil end.
       data fwrite fil
     else.
       fil=. }:^:('/'={:) aurl
