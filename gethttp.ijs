@@ -210,6 +210,8 @@ port=. {. 0".(>:i)}.server
 port=. (0=port){port,80
 if. #server-.'0123456789.' do.
   ip=. >2{sdgethostbyname_jsocket_ server
+else.
+  ip=. server
 end.
 try.
  t=. gettemplate rplc '<SERVER>';server;'<URL>';url
