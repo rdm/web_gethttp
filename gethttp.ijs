@@ -127,7 +127,7 @@ gethttp=: 3 : 0
   case. 'help' do.    NB. help
     opts=. '--help'
   case. do.           NB. custom option string?
-    if. 2 131072 e.~ 3!:0 x do. opts=. x
+    if. 2 131072 262144 e.~ 3!:0 x do. opts=. x
     else. 'Invalid left argument for getHTTP' return. end.
   end.
   opts=. ' ',opts,' '
