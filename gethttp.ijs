@@ -8,19 +8,30 @@ coclass 'wgethttp'
 
 3 : 0 ''
 
-  IFWGET=: IFUNIX *. -.UNAME-:'Darwin'          NB. Linux only
-  HTTPCMD=: 'curl'
-  if. -.IFUNIX do.
-    if. fexist f=. jpath '~addons/web/gethttp/bin/curl.exe' do.
+  IFWGET=: 0
+  HTTPCMD=: ''
+  select. <UNAME
+  case. 'Android' do.
+    if. 1=ftype f=. '/system/xbin/wget' do.  NB. android busybox
+      IFWGET=: 1
+      HTTPCMD=: f
+    elseif. 1=ftype f=. '/system/bin/wget' do.  NB. alternate location
+      IFWGET=: 1
       HTTPCMD=: f
     end.
-  end.
-  HTTPCMD=: IFWGET{:: HTTPCMD;'wget'
-  if. 1=ftype '/system/xbin/wget' do.  NB. android busybox
+  case. 'Win' do.
+    if. fexist f=. jpath '~addons/web/gethttp/bin/curl.exe' do.
+      HTTPCMD=: f
+    elseif. fexist f=. jpath '~tools/ftp/wget.exe' do.
+      IFWGET=: 1
+      HTTPCMD=: f
+    end.
+  case. 'Darwin' do.
+    HTTPCMD=: 'curl'
+  case. do.   NB. Linux
     IFWGET=: 1
-    HTTPCMD=: '/system/xbin/wget'
+    HTTPCMD=: 'wget'
   end.
-
   if. IFUNIX do.   NB. fix task.ijs definition of spawn on mac/unix
     spawn=: [: 2!:0 '(' , ' || true)' ,~ ]
   else.
@@ -75,44 +86,44 @@ gethttp=: 3 : 0
 :
   url=. y
   'jopts fnme'=. 2{. boxopen x
-  if. (-.IFWGET) *. IFIOS+.UNAME-:'Android' do.
-  if. 'http://'-.@-:7{.url do.
-    'only http:// supported' return.
-  end.
-  output=. 0
-  fil=. ''
-  select. jopts
-  case. 'stdout' do.  NB. content retrieved from stdout, log suppressed
-  case. 'help' do.    NB. help
-    'no help available' return.
-  case. 'file' do.
-    output=. 1
-    if. #fnme do.     NB. save as filename
-      fil=. fnme
+  if. IFIOS +. HTTPCMD-:'' do.
+    if. 'http://'-.@-:7{.url do.
+      'only http:// supported' return.
     end.
-  end.
-  server=. ({.~ i.&'/') (7}.url)
-  aurl=. }.(}.~ i.&'/') (7}.url)
-  try.
-  'header data'=. jwget server;aurl
-  catch.
-  'getHTTP error' return.
-  end.
-  if. 0=output do.
-    data return.
-  else.
-    if. #fil do.
-      if. '/' e. fil=. jpathsep fil do. mkdir_j_ ({.~ i:&'/') fil end.
-      data fwrite fil
+    output=. 0
+    fil=. ''
+    select. jopts
+    case. 'stdout' do.  NB. content retrieved from stdout, log suppressed
+    case. 'help' do.    NB. help
+      'no help available' return.
+    case. 'file' do.
+      output=. 1
+      if. #fnme do.     NB. save as filename
+        fil=. fnme
+      end.
+    end.
+    server=. ({.~ i.&'/') (7}.url)
+    aurl=. }.(}.~ i.&'/') (7}.url)
+    try.
+    'header data'=. jwget server;aurl
+    catch.
+    'getHTTP error' return.
+    end.
+    if. 0=output do.
+      data return.
     else.
-      fil=. }:^:('/'={:) aurl
-      fil=. (}.~ i:&'/') fil
-      fil=. }.^:('/'={.) fil
-      if. 0=#fil do. fil=. 'httpresult' end.
-      data fwrite fil
+      if. #fil do.
+        if. '/' e. fil=. jpathsep fil do. mkdir_j_ ({.~ i:&'/') fil end.
+        data fwrite fil
+      else.
+        fil=. }:^:('/'={:) aurl
+        fil=. (}.~ i:&'/') fil
+        fil=. }.^:('/'={.) fil
+        if. 0=#fil do. fil=. 'httpresult' end.
+        data fwrite fil
+      end.
+      '' return.
     end.
-    '' return.
-  end.
   end.
   select. jopts
   case. 'stdout' do.  NB. content retrieved from stdout, log suppressed
@@ -127,7 +138,7 @@ gethttp=: 3 : 0
   case. 'help' do.    NB. help
     opts=. '--help'
   case. do.           NB. custom option string?
-    if. 2 131072 262144 e.~ 3!:0 x do. opts=. x
+    if. 2 131072 262144 e.~ 3!:0 x do. opts=. utf8 x
     else. 'Invalid left argument for getHTTP' return. end.
   end.
   opts=. ' ',opts,' '
