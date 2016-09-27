@@ -132,3 +132,27 @@ Note 'Example raw options for cURL (Win/Mac)'
   NB. help
   '--help' gethttp ''
 )
+
+Note 'Example for cURL (Win/Mac) with ssl support'
+  NB. The following use raw cURL options. (untested)
+  NB. content retrieved from stdout, log suppressed
+  ]cnt=. '-o - -s -S' gethttp 'https://curl.haxx.se'
+  NB. content & log retrieved from stdout
+  ]all=. ('-o - --stderr -') gethttp 'https://curl.haxx.se'
+  NB. content retrieved from stdout, log saved to file
+  ]cnt=. ('-o - --stderr ',jpath '~temp/gethttp.log') gethttp 'https://curl.haxx.se'
+  NB. file copied to current dir, log suppressed
+  '-O -s -S' gethttp 'https://curl.haxx.se/index.html'
+  NB. file copied to current dir, log retrieved from stdout
+  ]log=. '-O --stderr -' gethttp 'https://curl.haxx.se/index.html'
+  NB. file copied to current dir, log saved to file
+  ('-O --stderr ',jpath '~temp/gethttp.log') gethttp 'https://curl.haxx.se/index.html'
+  NB. content saved to file, log suppressed
+  ('-o ',(jpath '~temp/jindex.htm'),' -s -S') gethttp 'https://curl.haxx.se'
+   NB. content saved to file, log retrieved from stdout
+  ]log=. ('-o ',(jpath '~temp/jindex.htm'),' --stderr -') gethttp 'https://curl.haxx.se'
+  NB. content saved to file, log saved to file
+  ('-o ',(jpath '~temp/jindex.htm'),' --stderr ',jpath '~temp/gethttp.log') gethttp 'https://curl.haxx.se'
+  NB. help
+  '--help' gethttp ''
+)
