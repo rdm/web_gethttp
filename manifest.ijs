@@ -13,9 +13,9 @@ You could get a more recent cert file from
 https://curl.haxx.se/docs/caextract.html
 )
 
-VERSION=: '1.0.17'
+VERSION=: '1.0.18'
 
-RELEASE=: 'j602 j701 j801 j802 j803 j804 j805'
+RELEASE=: 'j602 j701 j801 j802 j803 j804 j805 j806'
 
 PLATFORMS=: ''
 
