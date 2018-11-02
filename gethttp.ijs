@@ -29,8 +29,14 @@ coclass 'wgethttp'
   case. 'Darwin' do.
     HTTPCMD=: 'curl'
   case. do.   NB. Linux
-    IFWGET=: 1
-    HTTPCMD=: 'wget'
+    try.
+      2!:0'which wget 2>/dev/null'
+      IFWGET=: 1 [ HTTPCMD=: 'wget' catch. end.
+    if. -.IFWGET do.
+    try.
+      2!:0'which curl 2>/dev/null'
+      HTTPCMD=: 'curl' catch. end.
+    end.
   end.
   if. IFUNIX do.   NB. fix task.ijs definition of spawn on mac/unix
     spawn=: [: 2!:0 '(' , ' || true)' ,~ ]

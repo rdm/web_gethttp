@@ -54,11 +54,11 @@ test=: 3 : 0
     assert +./ 'Usage:' E. help
 
     log=. ('file';TestCntFile) gethttp TestURL
-    if. IFUNIX = UNAME -: 'Darwin' do. assert 30 < #log end. NB.Don't Test Linux
+    if. -.IFWGET_wgethttp_ do. assert 30 < #log end. NB.Don't Test wget
     assert checkFile TestCntFile
 
     NB. content saved to file, log saved to file
-    if. IFUNIX = UNAME -: 'Darwin' do.  NB. cURL options
+    if. -.IFWGET_wgethttp_ do.  NB. cURL options
       opts=. '-o ',TestCntFile,' --stderr ',TestLogFile
     else.                                NB. Wget options
       opts=. '-O ',TestCntFile,' -o ',TestLogFile
@@ -87,7 +87,7 @@ Note 'test commands for gethttp'
   ('file';TestCntFile) gethttp 'http://www.jsoftware.com'
 )
 
-Note 'Example raw options for Wget (Linux)'
+Note 'Example raw options for Wget'
   NB. The following use raw Wget options.
   NB. content retrieved from stdout, log suppressed
   ]cnt=. '-O - -q' gethttp 'http://www.jsoftware.com'
@@ -109,7 +109,7 @@ Note 'Example raw options for Wget (Linux)'
   ('-O ',(jpath '~temp/jindex.htm'),' -o ',jpath '~temp/gethttp.log') gethttp 'http://www.jsoftware.com'
 )
 
-Note 'Example raw options for cURL (Win/Mac)'
+Note 'Example raw options for cURL'
   NB. The following use raw cURL options. (untested)
   NB. content retrieved from stdout, log suppressed
   ]cnt=. '-o - -s -S' gethttp 'http://www.jsoftware.com'
@@ -133,7 +133,7 @@ Note 'Example raw options for cURL (Win/Mac)'
   '--help' gethttp ''
 )
 
-Note 'Example for cURL (Win/Mac) with ssl support'
+Note 'Example for cURL with ssl support'
   NB. The following use raw cURL options. (untested)
   NB. content retrieved from stdout, log suppressed
   ]cnt=. '-o - -s -S' gethttp 'https://curl.haxx.se'
