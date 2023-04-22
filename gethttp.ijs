@@ -40,8 +40,10 @@ coclass 'wgethttp'
   end.
   if. IFUNIX do.   NB. fix task.ijs definition of spawn on mac/unix
     spawn=: [: 2!:0 '(' , ' || true)' ,~ ]
+    quot=: '"','"',~rplc&(,(];'\',])"0'\$"')
   else.
     spawn=: spawn_jtask_
+    quot=: ]
   end.
   ''
 )
@@ -148,7 +150,7 @@ gethttp=: 3 : 0
     else. 'Invalid left argument for getHTTP' return. end.
   end.
   opts=. ' ',opts,' '
-  spawn HTTPCMD , opts , url
+  spawn HTTPCMD , opts , quot url
 )
 
 NB. =========================================================
